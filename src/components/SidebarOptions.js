@@ -1,7 +1,6 @@
 import { makeStyles } from "@mui/styles";
 import { createTheme } from "@mui/material/styles";
 import { Typography } from "@mui/material";
-// import { themeOptions } from "../theme";
 
 const theme = createTheme();
 const useStyles = makeStyles({
@@ -30,12 +29,10 @@ const useStyles = makeStyles({
 const SidebarOptions = ({ active, icon, text }) => {
 	const classes = useStyles();
 	return (
-		<>
-			<div className={`${classes.sidebarOptions} ${active ? "active" : ""}`}>
-				{icon}
-				<Typography variant="h6">{text}</Typography>
-			</div>
-		</>
+		<div className={`${classes.sidebarOptions} ${active ? "active" : ""}`}>
+			{icon}
+			<Typography variant="h6">{text}</Typography>
+		</div>
 	);
 };
 
