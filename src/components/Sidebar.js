@@ -3,26 +3,39 @@ import { makeStyles } from "@mui/styles";
 import { createTheme } from "@mui/material/styles";
 import { Button } from "@mui/material";
 import {
-	Twitter,
-	HomeRounded,
-	SearchRounded,
-	NotificationsNoneRounded,
-	MailOutlineRounded,
 	BookmarkBorderRounded,
-	NotesRounded,
-	PersonOutlineRounded,
+	HomeRounded,
+	MailOutlineRounded,
 	MoreHorizSharp,
+	NotesRounded,
+	NotificationsNoneRounded,
+	PersonOutlineRounded,
+	SearchRounded,
+	Twitter,
 } from "@mui/icons-material/";
 
 const theme = createTheme();
 
 const useStyles = makeStyles({
-	nav: {
+	sidebar: {
+		borderRight: `1px solid ${theme.palette.grey[200]}`,
+		flex: "0.3",
+		padding: theme.spacing(0, 1.5),
+		"& .twitterIcon": {
+			padding: theme.spacing(1),
+			cursor: "pointer",
+			"&:hover": {
+				backgroundColor: "#e1f3ff",
+				borderRadius: theme.shape.borderRadius * 50,
+				transition: "200ms ease-out",
+			},
+		},
 		"& .MuiButton-root": {
-			backgroundColor: theme.palette.primary.main,
 			borderRadius: theme.shape.borderRadius * 50,
 			fontSize: "17px",
 			fontWeight: "bolder",
+			marginTop: theme.spacing(1.5),
+			minWidth: "250px",
 			padding: theme.spacing(1.5),
 			textTransform: "none",
 		},
@@ -33,8 +46,8 @@ const Sidebar = () => {
 	const classes = useStyles();
 	const iconSize = "large";
 	return (
-		<nav className={classes.nav}>
-			<Twitter fontSize={iconSize} color="primary" />
+		<nav className={classes.sidebar}>
+			<Twitter className="twitterIcon" fontSize={iconSize} color="primary" />
 
 			<SidebarOptions
 				active={true}
@@ -71,11 +84,11 @@ const Sidebar = () => {
 			/>
 
 			<Button
-				onClick={() => console.log("Tweet!")}
 				disableElevation
 				fullWidth
-				variant="contained"
+				onClick={() => console.log("Tweet!")}
 				size="large"
+				variant="contained"
 			>
 				Tweet
 			</Button>
