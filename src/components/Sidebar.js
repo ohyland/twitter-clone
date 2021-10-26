@@ -1,7 +1,8 @@
 import SidebarOptions from "./SidebarOptions";
+import TweetButton from "./TweetButton";
 import { makeStyles } from "@mui/styles";
 import { createTheme } from "@mui/material/styles";
-import { Button } from "@mui/material";
+
 import {
 	BookmarkBorderRounded,
 	HomeRounded,
@@ -15,7 +16,6 @@ import {
 } from "@mui/icons-material/";
 
 const theme = createTheme();
-
 const useStyles = makeStyles({
 	sidebar: {
 		borderRight: `1px solid ${theme.palette.grey[200]}`,
@@ -30,21 +30,16 @@ const useStyles = makeStyles({
 				transition: "200ms ease-out",
 			},
 		},
-		"& .MuiButton-root": {
-			borderRadius: theme.shape.borderRadius * 50,
-			fontSize: "17px",
-			fontWeight: "bolder",
-			marginTop: theme.spacing(1.5),
-			minWidth: "250px",
-			padding: theme.spacing(1.5),
-			textTransform: "none",
-		},
 	},
 });
 
 const Sidebar = () => {
 	const classes = useStyles();
 	const iconSize = "large";
+	const handleClick = () => {
+		console.log("TWEET");
+	};
+
 	return (
 		<nav className={classes.sidebar}>
 			<Twitter className="twitterIcon" fontSize={iconSize} color="primary" />
@@ -83,15 +78,7 @@ const Sidebar = () => {
 				text="More"
 			/>
 
-			<Button
-				disableElevation
-				fullWidth
-				onClick={() => console.log("Tweet!")}
-				size="large"
-				variant="contained"
-			>
-				Tweet
-			</Button>
+			<TweetButton size="large" fullWidth={true} handleClick={handleClick} />
 		</nav>
 	);
 };
