@@ -32,6 +32,9 @@ const useStyles = makeStyles({
 		alignItems: "stretch",
 		display: "flex",
 		height: "100vh",
+		marginLeft: "auto",
+		marginRight: "auto",
+		maxWidth: "1300px",
 	},
 });
 
