@@ -5,7 +5,7 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles({
 	widgets: {
-		flex: "0.3",
+		flex: "0.25",
 	},
 });
 

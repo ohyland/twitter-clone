@@ -19,16 +19,10 @@ const useStyles = makeStyles({
 		padding: theme.spacing(1.5, 2),
 		"& input": {
 			border: "none",
-			flex: 1,
+			width: "100%",
 			fontSize: "20px",
 			fontWeight: "bold",
 			paddingLeft: theme.spacing(2),
-		},
-		"& form": {
-			height: "100%",
-			display: "flex",
-			flexWrap: "wrap",
-			alignContent: "space-between",
 		},
 	},
 	tweetButtonWrapper: {

@@ -19,7 +19,7 @@ const theme = createTheme();
 const useStyles = makeStyles({
 	sidebar: {
 		borderRight: `1px solid ${theme.palette.grey[200]}`,
-		flex: "0.3",
+		flex: "0.25",
 		padding: theme.spacing(0, 1.5),
 		"& .twitterIcon": {
 			padding: theme.spacing(1),
