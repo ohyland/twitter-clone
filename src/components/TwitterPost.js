@@ -1,4 +1,3 @@
-import photo from "../images/avatar.jpg";
 import { createTheme } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 import { Typography, IconButton, CardMedia } from "@material-ui/core";
@@ -91,7 +90,7 @@ const TwitterPost = ({
 
 	return (
 		<article className={classes.twitterPost}>
-			<Avatar alt="Olivia Hyland" className="avatar" src={photo} />
+			<Avatar alt="Olivia Hyland" className="avatar" src={avatar} />
 			<div>
 				<Typography className="names">
 					<span className="displayName">
@@ -107,7 +106,7 @@ const TwitterPost = ({
 					@{userName} {timeStamp}
 				</Typography>
 				<Typography>{tweet}</Typography>
-				<CardMedia component="img" height="200" image={photo} alt="avatar" />
+				<CardMedia component="img" image={image} alt="avatar" />
 				<div className={classes.footer}>
 					<IconButton className="chatBubbleIcon">
 						<ChatBubbleOutlineRoundedIcon fontSize="small" />

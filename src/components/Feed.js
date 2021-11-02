@@ -1,5 +1,8 @@
 import TweetBox from "./TweetBox";
 import TwitterPost from "./TwitterPost";
+import avatarImage from "../images/avatar.jpg";
+import tweetImage from "../images/happyTuesday.gif";
+
 import { makeStyles } from "@mui/styles";
 import { createTheme } from "@mui/material/styles";
 import { Typography } from "@material-ui/core";
@@ -31,12 +34,13 @@ const useStyles = makeStyles({
 const Feed = () => {
 	const classes = useStyles();
 
-	const displayName = "Sky News Breaking";
-	const userName = "SkyNewsBreak";
-	const tweet =
-		"The Queen has carried out virtual audiences at Windsor Castle - her first official engagements in seven days since she was ordered to rest by doctors. For more on this and other news visit";
-	const timeStamp = "Oct 25";
+	const avatar = avatarImage;
+	const displayName = "Olivia Hyland";
 	const favourite = false;
+	const image = tweetImage;
+	const timeStamp = "Nov 2";
+	const tweet = "Spending some time today brushing up on my React skills!!";
+	const userName = "ohyland";
 	const verified = true;
 
 	return (
@@ -47,8 +51,10 @@ const Feed = () => {
 			</div>
 			<TweetBox />
 			<TwitterPost
+				avatar={avatar}
 				displayName={displayName}
 				favourite={favourite}
+				image={image}
 				userName={userName}
 				tweet={tweet}
 				timeStamp={timeStamp}
