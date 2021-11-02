@@ -42,9 +42,12 @@ const useStyles = makeStyles({
 			borderRadius: theme.spacing(1),
 		},
 	},
+	content: {
+		flex: "1",
+	},
 	footer: {
-		display: "flex",
 		alignItems: "centre",
+		display: "flex",
 		justifyContent: "space-between",
 		" & .MuiIconButton-root": {
 			padding: theme.spacing(1),
@@ -91,7 +94,7 @@ const TwitterPost = ({
 	return (
 		<article className={classes.twitterPost}>
 			<Avatar alt="Olivia Hyland" className="avatar" src={avatar} />
-			<div>
+			<div className={classes.content}>
 				<Typography className="names">
 					<span className="displayName">
 						{displayName}
