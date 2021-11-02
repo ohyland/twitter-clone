@@ -1,7 +1,10 @@
+import { useState, useEffect } from "react";
+import database from "../firebase";
+
 import TweetBox from "./TweetBox";
 import TwitterPost from "./TwitterPost";
-import avatarImage from "../images/avatar.jpg";
-import tweetImage from "../images/happyTuesday.gif";
+// import avatarImage from "../images/avatar.jpg";
+// import tweetImage from "../images/happyTuesday.gif";
 
 import { makeStyles } from "@mui/styles";
 import { createTheme } from "@mui/material/styles";
@@ -33,15 +36,15 @@ const useStyles = makeStyles({
 
 const Feed = () => {
 	const classes = useStyles();
+	const [posts, setPosts] = useState([]);
 
-	const avatar = avatarImage;
-	const displayName = "Olivia Hyland";
-	const favourite = false;
-	const image = tweetImage;
-	const timeStamp = "Nov 2";
-	const tweet = "Spending some time today brushing up on my React skills!!";
-	const userName = "ohyland";
-	const verified = true;
+	useEffect(() => {
+		database
+			.collection("posts")
+			.onSnapshot((snapshot) =>
+				setPosts(snapshot.docs.map((doc) => doc.data()))
+			);
+	}, []);
 
 	return (
 		<main className={classes.feed}>
@@ -50,16 +53,18 @@ const Feed = () => {
 				<StarPurple500 />
 			</div>
 			<TweetBox />
-			<TwitterPost
-				avatar={avatar}
-				displayName={displayName}
-				favourite={favourite}
-				image={image}
-				userName={userName}
-				tweet={tweet}
-				timeStamp={timeStamp}
-				verified={verified}
-			/>
+			{posts.map((post) => (
+				<TwitterPost
+					avatar={post.avatar}
+					displayName={post.displayName}
+					favourite={post.favourite}
+					image={post.image}
+					userName={post.userName}
+					tweet={post.tweet}
+					timeStamp={post.timeStamp}
+					verified={post.verified}
+				/>
+			))}
 		</main>
 	);
 };
