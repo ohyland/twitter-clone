@@ -3,8 +3,6 @@ import database from "../firebase";
 
 import TweetBox from "./TweetBox";
 import TwitterPost from "./TwitterPost";
-// import avatarImage from "../images/avatar.jpg";
-// import tweetImage from "../images/happyTuesday.gif";
 
 import { makeStyles } from "@mui/styles";
 import { createTheme } from "@mui/material/styles";
@@ -46,6 +44,14 @@ const Feed = () => {
 			);
 	}, []);
 
+	const handleDeleteClick = (tweetMessage) => {
+		const removeItem = posts.filter((post) => {
+			return post.tweet !== tweetMessage;
+		});
+
+		setPosts(removeItem);
+	};
+
 	return (
 		<main className={classes.feed}>
 			<div className={classes.feedHeader}>
@@ -53,18 +59,30 @@ const Feed = () => {
 				<StarPurple500 />
 			</div>
 			<TweetBox />
-			{posts.map((post) => (
-				<TwitterPost
-					avatar={post.avatar}
-					displayName={post.displayName}
-					favourite={post.favourite}
-					image={post.image}
-					userName={post.userName}
-					tweet={post.tweet}
-					timeStamp={post.timeStamp}
-					verified={post.verified}
-				/>
-			))}
+			{posts.map(
+				({
+					avatar,
+					displayName,
+					favourite,
+					image,
+					userName,
+					tweet,
+					timeStamp,
+					verified,
+				}) => (
+					<TwitterPost
+						avatar={avatar}
+						displayName={displayName}
+						favourite={favourite}
+						image={image}
+						userName={userName}
+						tweet={tweet}
+						timeStamp={timeStamp}
+						verified={verified}
+						handleDeleteClick={handleDeleteClick}
+					/>
+				)
+			)}
 		</main>
 	);
 };
