@@ -1,4 +1,6 @@
+import { useState } from "react";
 import TweetButton from "./TweetButton";
+import database from "../firebase";
 
 import { createTheme, styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
@@ -22,7 +24,8 @@ const useStyles = makeStyles({
 			width: "100%",
 			fontSize: "20px",
 			fontWeight: "bold",
-			paddingLeft: theme.spacing(2),
+			marginLeft: theme.spacing(2),
+			padding: theme.spacing(1),
 		},
 	},
 	tweetButtonWrapper: {
@@ -38,18 +41,52 @@ const Input = styled("input")({
 
 const TweetBox = () => {
 	const classes = useStyles();
+	const [tweetMessage, setTweetMessage] = useState("");
+	const [tweetImage, setTweetImage] = useState("");
+
+	const sendTweet = (e) => {
+		e.preventDefault();
+		database.collection("posts").add({
+			avatar:
+				"https://avatars.githubusercontent.com/u/52823456?s=400&u=1a40b8b9cc5511524e3be19e63d1b934d99ea7e0&v=4",
+			displayName: "Olivia Hyland",
+			tweet: tweetMessage,
+			userName: "ohyland",
+			verified: true,
+			image: tweetImage,
+			favourite: false,
+		});
+		setTweetMessage("");
+		setTweetImage("");
+	};
+
 	return (
 		<div className={classes.tweetBox}>
 			<form>
 				<div className={classes.tweet}>
 					<Avatar alt="Olivia Hyland" src={photo} />
 
-					<input type="text" placeholder="What's Happening?" />
+					<input
+						onChange={(e) => setTweetMessage(e.target.value)}
+						type="text"
+						value={tweetMessage}
+						placeholder="What's Happening?"
+					/>
 				</div>
 				<div className={classes.tweetButtonWrapper}>
 					<div>
 						<label htmlFor="icon-button-file">
-							<Input accept="image/*" id="icon-button-file" type="file" />
+							<Input
+								value={tweetImage}
+								accept="image/*"
+								id="icon-button-file"
+								type="file"
+								onChange={(e) =>
+									setTweetImage(
+										"https://media0.giphy.com/media/ZubZqIeSsZ60t0ID9l/giphy.gif?cid=ecf05e4723fb2892aa4fb0fb40489537b53f021f17332f64&rid=giphy.gif&ct=g"
+									)
+								}
+							/>
 							<IconButton
 								aria-label="upload picture"
 								component="span"
@@ -59,7 +96,7 @@ const TweetBox = () => {
 							</IconButton>
 						</label>
 					</div>
-					<TweetButton size="small" />
+					<TweetButton size="small" sendTweet={sendTweet} />
 				</div>
 			</form>
 		</div>
