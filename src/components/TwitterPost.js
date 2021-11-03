@@ -1,14 +1,17 @@
+import { useState } from "react";
 import { createTheme } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 import { Typography, IconButton, CardMedia } from "@material-ui/core";
-import Avatar from "@mui/material/Avatar";
+import { Avatar, Menu, MenuItem, ListItemIcon } from "@mui/material";
 import {
-	Verified as VerifiedIcon,
-	FavoriteBorder as FavoriteBorderIcon,
-	Favorite as FavoriteIcon,
-	IosShareRounded as IosShareRoundedIcon,
-	RepeatRounded as RepeatRoundedIcon,
 	ChatBubbleOutlineRounded as ChatBubbleOutlineRoundedIcon,
+	Delete as DeleteIcon,
+	Favorite as FavoriteIcon,
+	FavoriteBorder as FavoriteBorderIcon,
+	IosShareRounded as IosShareRoundedIcon,
+	MoreHoriz as MoreHorizIcon,
+	RepeatRounded as RepeatRoundedIcon,
+	Verified as VerifiedIcon,
 } from "@mui/icons-material/";
 const theme = createTheme();
 const useStyles = makeStyles({
@@ -18,7 +21,7 @@ const useStyles = makeStyles({
 		padding: theme.spacing(1.5),
 		"& .MuiTypography-root": {
 			fontSize: "15px",
-			marginBottom: theme.spacing(0.5),
+			margin: theme.spacing(0, 0, 0.5, 0.5),
 		},
 		"& .verifiedIcon": {
 			paddingLeft: theme.spacing(0.3),
@@ -45,6 +48,11 @@ const useStyles = makeStyles({
 	content: {
 		flex: "1",
 	},
+	header: {
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "space-between",
+	},
 	footer: {
 		alignItems: "centre",
 		display: "flex",
@@ -52,13 +60,16 @@ const useStyles = makeStyles({
 		" & .MuiIconButton-root": {
 			padding: theme.spacing(1),
 		},
-		"& .heartIcon": {
+		"& .heartIconButton": {
 			"&:hover": {
 				backgroundColor: "pink",
 				"& svg": {
 					fill: "red",
 				},
 			},
+		},
+		"& .heartIcon": {
+			fill: "red",
 		},
 		"& .shareIcon, .chatBubbleIcon": {
 			"&:hover": {
@@ -88,28 +99,61 @@ const TwitterPost = ({
 	tweet,
 	userName,
 	verified,
+	handleDeleteClick,
+	handleFavourite,
 }) => {
 	const classes = useStyles();
+	const [anchorEl, setAnchorEl] = useState(null);
+	const open = Boolean(anchorEl);
+
+	const handleClick = (e) => {
+		setAnchorEl(e.currentTarget);
+	};
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
 
 	return (
 		<article className={classes.twitterPost}>
 			<Avatar alt="Olivia Hyland" className="avatar" src={avatar} />
 			<div className={classes.content}>
-				<Typography className="names">
-					<span className="displayName">
-						{displayName}
-						{verified ? (
-							<VerifiedIcon
-								className="verifiedIcon"
-								color="primary"
-								fontSize="small"
-							/>
-						) : null}
-					</span>{" "}
-					@{userName} {timeStamp}
-				</Typography>
+				<div className={classes.header}>
+					<Typography className="names">
+						<span className="displayName">
+							{displayName}
+							{verified ? (
+								<VerifiedIcon
+									className="verifiedIcon"
+									color="primary"
+									fontSize="small"
+								/>
+							) : null}
+						</span>{" "}
+						@{userName} {timeStamp}
+					</Typography>
+					<IconButton size="small" onClick={handleClick}>
+						<MoreHorizIcon fontSize="small" />
+					</IconButton>
+					<Menu
+						id="basic-menu"
+						anchorEl={anchorEl}
+						open={open}
+						onClose={handleClose}
+						MenuListProps={{
+							"aria-labelledby": "basic-button",
+						}}
+					>
+						<MenuItem onClick={(handleClose, () => handleDeleteClick(tweet))}>
+							<ListItemIcon>
+								<DeleteIcon fontSize="small" />
+							</ListItemIcon>
+							Delete
+						</MenuItem>
+					</Menu>
+				</div>
 				<Typography>{tweet}</Typography>
-				<CardMedia component="img" image={image} alt="avatar" />
+				{image && <CardMedia component="img" image={image} />}
 				<div className={classes.footer}>
 					<IconButton className="chatBubbleIcon">
 						<ChatBubbleOutlineRoundedIcon fontSize="small" />
@@ -121,11 +165,11 @@ const TwitterPost = ({
 						<IosShareRoundedIcon fontSize="small" />
 					</IconButton>
 
-					<IconButton className="heartIcon">
+					<IconButton className="heartIconButton" onClick={handleFavourite}>
 						{favourite ? (
-							<FavoriteIcon fontSize="small" color="red" />
+							<FavoriteIcon fontSize="small" className="heartIcon" />
 						) : (
-							<FavoriteBorderIcon fontSize="small" color="red" />
+							<FavoriteBorderIcon fontSize="small" />
 						)}
 					</IconButton>
 				</div>
