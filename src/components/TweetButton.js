@@ -20,16 +20,17 @@ const useStyles = makeStyles({
 	},
 });
 
-const TweetButton = ({ fullWidth, handleClick, size }) => {
+const TweetButton = ({ fullWidth, size, sendTweet }) => {
 	const classes = useStyles();
 	return (
 		<Button
 			className={classes.tweetButton}
 			disableElevation
 			fullWidth={fullWidth}
-			onClick={handleClick}
+			onClick={sendTweet}
 			size={size}
 			variant="contained"
+			type="submit"
 		>
 			Tweet
 		</Button>
