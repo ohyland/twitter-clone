@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import { createTheme } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 import { Typography, IconButton, CardMedia } from "@material-ui/core";
@@ -90,92 +90,95 @@ const useStyles = makeStyles({
 	},
 });
 
-const TwitterPost = ({
-	avatar,
-	displayName,
-	favourite,
-	image,
-	timeStamp,
-	tweet,
-	userName,
-	verified,
-	handleDeleteClick,
-	handleFavourite,
-}) => {
-	const classes = useStyles();
-	const [anchorEl, setAnchorEl] = useState(null);
-	const open = Boolean(anchorEl);
+const TwitterPost = forwardRef(
+	(
+		{
+			avatar,
+			displayName,
+			favourite,
+			image,
+			timeStamp,
+			tweet,
+			userName,
+			verified,
+			handleDeleteClick,
+		},
+		ref
+	) => {
+		const classes = useStyles();
+		const [anchorEl, setAnchorEl] = useState(null);
+		const open = Boolean(anchorEl);
 
-	const handleClick = (e) => {
-		setAnchorEl(e.currentTarget);
-	};
+		const handleClick = (e) => {
+			setAnchorEl(e.currentTarget);
+		};
 
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
+		const handleClose = () => {
+			setAnchorEl(null);
+		};
 
-	return (
-		<article className={classes.twitterPost}>
-			<Avatar alt="Olivia Hyland" className="avatar" src={avatar} />
-			<div className={classes.content}>
-				<div className={classes.header}>
-					<Typography className="names">
-						<span className="displayName">
-							{displayName}
-							{verified ? (
-								<VerifiedIcon
-									className="verifiedIcon"
-									color="primary"
-									fontSize="small"
-								/>
-							) : null}
-						</span>{" "}
-						@{userName} {timeStamp}
-					</Typography>
-					<IconButton size="small" onClick={handleClick}>
-						<MoreHorizIcon fontSize="small" />
-					</IconButton>
-					<Menu
-						id="basic-menu"
-						anchorEl={anchorEl}
-						open={open}
-						onClose={handleClose}
-						MenuListProps={{
-							"aria-labelledby": "basic-button",
-						}}
-					>
-						<MenuItem onClick={(handleClose, () => handleDeleteClick(tweet))}>
-							<ListItemIcon>
-								<DeleteIcon fontSize="small" />
-							</ListItemIcon>
-							Delete
-						</MenuItem>
-					</Menu>
+		return (
+			<article className={classes.twitterPost} ref={ref}>
+				<Avatar alt="Olivia Hyland" className="avatar" src={avatar} />
+				<div className={classes.content}>
+					<div className={classes.header}>
+						<Typography className="names">
+							<span className="displayName">
+								{displayName}
+								{verified ? (
+									<VerifiedIcon
+										className="verifiedIcon"
+										color="primary"
+										fontSize="small"
+									/>
+								) : null}
+							</span>{" "}
+							@{userName} {timeStamp}
+						</Typography>
+						<IconButton size="small" onClick={handleClick}>
+							<MoreHorizIcon fontSize="small" />
+						</IconButton>
+						<Menu
+							id="basic-menu"
+							anchorEl={anchorEl}
+							open={open}
+							onClose={handleClose}
+							MenuListProps={{
+								"aria-labelledby": "basic-button",
+							}}
+						>
+							<MenuItem onClick={(handleClose, () => handleDeleteClick(tweet))}>
+								<ListItemIcon>
+									<DeleteIcon fontSize="small" />
+								</ListItemIcon>
+								Delete
+							</MenuItem>
+						</Menu>
+					</div>
+					<Typography>{tweet}</Typography>
+					{image && <CardMedia component="img" image={image} />}
+					<div className={classes.footer}>
+						<IconButton className="chatBubbleIcon">
+							<ChatBubbleOutlineRoundedIcon fontSize="small" />
+						</IconButton>
+						<IconButton className="retweetIcon">
+							<RepeatRoundedIcon fontSize="small" />
+						</IconButton>
+						<IconButton className="shareIcon">
+							<IosShareRoundedIcon fontSize="small" />
+						</IconButton>
+
+						<IconButton className="heartIconButton">
+							{favourite ? (
+								<FavoriteIcon fontSize="small" className="heartIcon" />
+							) : (
+								<FavoriteBorderIcon fontSize="small" />
+							)}
+						</IconButton>
+					</div>
 				</div>
-				<Typography>{tweet}</Typography>
-				{image && <CardMedia component="img" image={image} />}
-				<div className={classes.footer}>
-					<IconButton className="chatBubbleIcon">
-						<ChatBubbleOutlineRoundedIcon fontSize="small" />
-					</IconButton>
-					<IconButton className="retweetIcon">
-						<RepeatRoundedIcon fontSize="small" />
-					</IconButton>
-					<IconButton className="shareIcon">
-						<IosShareRoundedIcon fontSize="small" />
-					</IconButton>
-
-					<IconButton className="heartIconButton" onClick={handleFavourite}>
-						{favourite ? (
-							<FavoriteIcon fontSize="small" className="heartIcon" />
-						) : (
-							<FavoriteBorderIcon fontSize="small" />
-						)}
-					</IconButton>
-				</div>
-			</div>
-		</article>
-	);
-};
-
+			</article>
+		);
+	}
+);
 export default TwitterPost;
