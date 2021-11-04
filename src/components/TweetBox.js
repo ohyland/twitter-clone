@@ -1,6 +1,7 @@
 import { useState } from "react";
 import TweetButton from "./TweetButton";
 import database from "../firebase";
+import moment from "moment";
 
 import { createTheme, styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
@@ -52,6 +53,7 @@ const TweetBox = () => {
 			displayName: "Olivia Hyland",
 			tweet: tweetMessage,
 			userName: "ohyland",
+			timeStamp: moment().format("MMM D"),
 			verified: true,
 			image: tweetImage,
 			favourite: false,

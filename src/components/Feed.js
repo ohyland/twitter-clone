@@ -73,7 +73,6 @@ const Feed = () => {
 						verified,
 					}) => (
 						<TwitterPost
-							key={tweet}
 							avatar={avatar}
 							displayName={displayName}
 							favourite={favourite}
